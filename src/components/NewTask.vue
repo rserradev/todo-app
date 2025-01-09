@@ -17,12 +17,6 @@ const addTask = (name) => {
 /**
  * TODO: Funcion para marcar la tarea como completada
  */
-const completeTask = (id) 
-
-/**
- * 
- * TODO: Funcion para eliminar una tarea
- */
 
 const deleteTask = (id) => {
     // Filtrar las tareas que no tengan el id que se quiere eliminar
