@@ -19,6 +19,11 @@ const addTask = (name) => {
  */
 const completeTask = (id) 
 
+/**
+ * 
+ * TODO: Funcion para eliminar una tarea
+ */
+
 const deleteTask = (id) => {
     // Filtrar las tareas que no tengan el id que se quiere eliminar
     // El metodo filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
