@@ -4,7 +4,7 @@
 - [ ] Mostrar lista de tareas.
 - [ ] Agregar nuevas tareas con un formulario.
 - [ ] Marcar tareas como completadas.
-- [ ] Crear componente `TaskItem`
+- [] Crear componente `TaskItem`
 
 
 ## Funcionalidades completadas

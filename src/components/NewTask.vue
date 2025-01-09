@@ -14,6 +14,16 @@ const addTask = (name) => {
     newTask.value = '';
 }
 
+/**
+ * TODO: Funcion para marcar la tarea como completada
+ */
+const completeTask = (id) 
+
+const deleteTask = (id) => {
+    // Filtrar las tareas que no tengan el id que se quiere eliminar
+    // El metodo filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
+    tasks.value = tasks.value.filter(task => task.id !== id);
+}
 </script>
 
 <template>
@@ -27,7 +37,7 @@ const addTask = (name) => {
     />
 
     <!-- Botón para añadir la tarea -->
-    <button @click="addTask"> Add </button>
+    <button @click="addTask(newTask)"> Add </button>
 
     <!-- Mostrar el texto de la nueva tarea -->
     <label > {{ newTask }}</label>
@@ -37,7 +47,11 @@ const addTask = (name) => {
         <li
             v-for="task in tasks"
             :key="task.id">
-                {{ task }}
+                {{ task.id }}
+                {{ task.name }}
+                {{ task.completed }}
+                <button>Complete</button>
+                <button @click="deleteTask(task.id)">Delete</button>
         </li>
     </ul>
 </template>
