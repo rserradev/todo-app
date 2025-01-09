@@ -15,7 +15,7 @@ const addTask = (name) => {
 }
 
 /**
- * TODO: Funcion para marcar la tarea como completada
+ * TODO: Funcion para marcar la tarea como completada, hay que hacer esta funcion
  */
 
 const deleteTask = (id) => {
