@@ -14,10 +14,15 @@ const addTask = (name) => {
     newTask.value = '';
 }
 
-/**
- * TODO: Funcion para marcar la tarea como completada, hay que hacer esta funcion
- */
+// Logica para completar una tarea
+const completeTask = (id) => {
+    // Buscar el id de la tarea que se quiere completar
+    const task = tasks.value.find(task => task.id === id);
+    // Cambiar el estado de la tarea, si esta completada cambiar a false y viceversa
+    task.completed = !task.completed;
+}
 
+// Funcion para eliminar una tarea
 const deleteTask = (id) => {
     // Filtrar las tareas que no tengan el id que se quiere eliminar
     // El metodo filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
@@ -43,13 +48,14 @@ const deleteTask = (id) => {
 
     <!-- Lista de tareas -->
     <ul>
-        <li
-            v-for="task in tasks"
-            :key="task.id">
+        <!-- Iterar sobre la lista de tareas -->
+        <li v-for="(task, index) in tasks" :key="index">
+                {{ index }}
                 {{ task.id }}
                 {{ task.name }}
                 {{ task.completed }}
-                <button>Complete</button>
+
+                <button @click="completeTask(task.id)">Complete</button>
                 <button @click="deleteTask(task.id)">Delete</button>
         </li>
     </ul>
