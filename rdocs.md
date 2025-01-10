@@ -2,9 +2,15 @@
 
 ## Funcionalidades por desarrollar
 - [ ] Mostrar lista de tareas.
+- [ ] botones a cada item de task
+- [ ] funcionalidad eliminar tarea
+- [ ] funcionalidad crear tarea
+- [ ] funcionalidad modificar tarea
+- [ ] funcionalidad completar tarea
+- [ ] funcionalidad de filtrar por complete, pending
 - [ ] Agregar nuevas tareas con un formulario.
 - [ ] Marcar tareas como completadas.
-- [] Crear componente `TaskItem`
+- [ ] Crear componente `TaskItem`
 
 
 ## Funcionalidades completadas
