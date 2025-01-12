@@ -3,47 +3,51 @@ import { ref } from 'vue';
 
 // Variables
 const title = ref(''); // Titulo de la tarea
-const newTask = ref(''); // Nueva Tarea
+const description = ref(''); // Nueva Tarea
 const tasks = ref([]); // Lista de Tareas
+const completedTasks = ref([]); // Lista de tareas completadas
+const uncompletedTasks = ref([]); // Lista de tareas no completadas
+const deletedTasks = ref([]); // Lista de tareas eliminadas
+const modifiedTasks = ref([]); // Lista de tareas modificadas
 const filter = ref('all'); // Filtro de tareas
 
-const addTask = (description) => {
-    if (description === '') return;
+const addTask = () => {
+    if (title.value === '' || description.value === '') return;
+    
     tasks.value.push({
         id: Date.now(),
-        title: title,
-        description: description,
+        title: title.value,
+        description: description.value,
         completed: false
-     });
-    newTask.value = '';
+    });
+
+    title.value = '';
+    description.value = '';
 }
 
 // Logica para completar una tarea
 const completeTask = (id) => {
-    // Buscar el id de la tarea que se quiere completar
     const task = tasks.value.find(task => task.id === id);
-    // Cambiar el estado de la tarea, si esta completada cambiar a false y viceversa
     task.completed = !task.completed;
 }
 
 // Logica para modificar una tarea
 const modifyTask = (id) => {
-    // Buscar el id de la tarea que se quiere modificar
     const task = tasks.value.find(task => task.id === id);
-    // Cambiar el nombre de la tarea
-    task.description = 'New Name';
 }
 
 // Funcion para eliminar una tarea
 const deleteTask = (id) => {
-    // Filtrar las tareas que no tengan el id que se quiere eliminar
-    // El metodo filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
-    tasks.value = tasks.value.filter(task => task.id !== id);
+    if (window.confirm('Esta seguro que quiere eliminar la tarea?') === true) {
+        const task = tasks.value.find(task => task.id === id); // Busca la tarea por el id
+        deletedTasks.value.push(task); // Añade la tarea eliminada al array de tareas eliminadas
+        tasks.value = tasks.value.filter(task => task.id !== id); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
+    }
 }
 </script>
 
 <template>
-    <h1>task list</h1>
+    <h1>Task List</h1>
 
     <input
         v-model="title"
@@ -52,44 +56,44 @@ const deleteTask = (id) => {
     <br>
     <!-- Input para añadir una nueva tarea -->
     <input
-        v-model="newTask"
+        v-model="description"
         type="text"
         placeholder="Type description of the task"
     />
 
     <!-- Botón para añadir la tarea -->
-    <button @click="addTask(newTask)"> Add Task</button>
+    <button @click="addTask()"> Add Task</button>
 
-    <!-- Mostrar el texto de la nueva tarea -->
-    <label > {{ newTask }}</label>
-
-    <input type="text">asdasdasd
     <!-- Lista de tareas -->
     <ul>
         <!-- Iterar sobre la lista de tareas -->
         <li v-for="(task, index) in tasks" :key="index">
-                {{ task.id }}
-                <h1 placeholder="Title"></h1>
-                <hr>
-                <input type="text" v-model="tasks[index].name">
-                
-                {{ task.description }}
-                {{ task.completed }}
+            <input type="text" v-model="tasks[index].title">
+            <input type="text" v-model="tasks[index].description">
+            <h1 placeholder="Title"></h1>
+            
+            <br>
 
-                <button
-                    @click="completeTask(task.id)">
-                    Complete
-                </button>
+            <button
+                @click="completeTask(task.id)">
+                Complete
+            </button>
                 
-                <button
-                    @click="modifyTask(task.id)">
+            <button
+                @click="modifyTask(task.id)">
                     Modify
-                </button>
+            </button>
 
-                <button 
-                    @click="deleteTask(task.id)">
-                    Delete
-                </button>
+            <button 
+                @click="deleteTask(task.id)">
+                Delete
+            </button>
+        </li>
+        <!-- Lista de tareas eliminadas -->
+        <h2>Deleted Tasks</h2>
+        <li v-for="(task, index) in deletedTasks"
+            :key="index">
+            {{ task.title }}
         </li>
     </ul>
 </template>
