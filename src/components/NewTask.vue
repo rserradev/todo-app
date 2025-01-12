@@ -13,7 +13,7 @@ const filter = ref('all'); // Filtro de tareas
 
 const addTask = () => {
     if (title.value === '' || description.value === '') return;
-    
+
     tasks.value.push({
         id: Date.now(),
         title: title.value,
@@ -47,53 +47,48 @@ const deleteTask = (id) => {
 </script>
 
 <template>
-    <h1>Task List</h1>
+    <div id="task-list-container">
+        <h1>Task List</h1>
 
-    <input
-        v-model="title"
-        placeholder="Title"
-    />
-    <br>
-    <!-- Input para añadir una nueva tarea -->
-    <input
-        v-model="description"
-        type="text"
-        placeholder="Type description of the task"
-    />
+        <input v-model="title" placeholder="Title" />
+        <br>
+        <!-- Input para añadir una nueva tarea -->
+        <input v-model="description" type="text" placeholder="Type description of the task" />
 
-    <!-- Botón para añadir la tarea -->
-    <button @click="addTask()"> Add Task</button>
+        <!-- Botón para añadir la tarea -->
+        <button @click="addTask()"> Add Task</button>
 
-    <!-- Lista de tareas -->
-    <ul>
-        <!-- Iterar sobre la lista de tareas -->
-        <li v-for="(task, index) in tasks" :key="index">
-            <input type="text" v-model="tasks[index].title">
-            <input type="text" v-model="tasks[index].description">
-            <h1 placeholder="Title"></h1>
-            
-            <br>
+        <!-- Lista de tareas -->
+        <ul>
+            <!-- Iterar sobre la lista de tareas -->
+            <li v-for="(task, index) in tasks" :key="index">
+                <input type="text" v-model="tasks[index].title">
+                <input type="text" v-model="tasks[index].description">
+                <h1 placeholder="Title"></h1>
 
-            <button
-                @click="completeTask(task.id)">
-                Complete
-            </button>
-                
-            <button
-                @click="modifyTask(task.id)">
+                <br>
+
+                <button @click="completeTask(task.id)">
+                    Complete
+                </button>
+
+                <button @click="modifyTask(task.id)">
                     Modify
-            </button>
+                </button>
 
-            <button 
-                @click="deleteTask(task.id)">
-                Delete
-            </button>
-        </li>
-        <!-- Lista de tareas eliminadas -->
-        <h2>Deleted Tasks</h2>
-        <li v-for="(task, index) in deletedTasks"
-            :key="index">
-            {{ task.title }}
-        </li>
-    </ul>
+                <button @click="deleteTask(task.id)">
+                    Delete
+                </button>
+            </li>
+            <!-- Lista de tareas eliminadas -->
+            <h2>Deleted Tasks</h2>
+            <li v-for="(task, index) in deletedTasks" :key="index">
+                {{ task.title }}
+            </li>
+        </ul>
+    </div>
 </template>
+
+<style scoped>
+
+</style>
