@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div id="sidebar-menu">
+    <div class="sidebar-menu-container">
         <h1>Menu</h1>
         <ul>
             <li>
