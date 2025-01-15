@@ -59,15 +59,11 @@ const deleteTask = (id) => {
         <button @click="addTask()"> Add Task</button>
 
         <!-- Lista de tareas -->
-        <ul>
             <!-- Iterar sobre la lista de tareas -->
-            <li v-for="(task, index) in tasks" :key="index">
+            <div v-for="(task, index) in tasks" :key="index">
                 <input type="text" v-model="tasks[index].title">
                 <input type="text" v-model="tasks[index].description">
                 <h1 placeholder="Title"></h1>
-
-                <br>
-
                 <button @click="completeTask(task.id)">
                     Complete
                 </button>
@@ -79,13 +75,12 @@ const deleteTask = (id) => {
                 <button @click="deleteTask(task.id)">
                     Delete
                 </button>
-            </li>
+            </div>
             <!-- Lista de tareas eliminadas -->
             <h2>Deleted Tasks</h2>
             <li v-for="(task, index) in deletedTasks" :key="index">
                 {{ task.title }}
             </li>
-        </ul>
     </div>
 </template>
 
