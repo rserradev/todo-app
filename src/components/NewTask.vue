@@ -6,12 +6,10 @@ import { computed } from 'vue';
 const title = ref(''); // Titulo de la tarea
 const description = ref(''); // Nueva Tarea
 const tasksList = ref([]); // Lista de Tareas
-const completedTasks = ref([]); // Lista de tareas completadas
-const uncompletedTasks = ref([]); // Lista de tareas no completadas
 const deletedTasks = ref([]); // Lista de tareas eliminadas
-const modifiedTasks = ref([]); // Lista de tareas modificadas
-const filter = ref('all'); // Filtro de tareas
+const filter = ref('false'); // Filtro de tareas
 
+// Funcion para añadir una nueva tarea como un objeto en la lista de tareas
 const addTask = () => {
     if (title.value === '' || description.value === '') return;
 
@@ -19,11 +17,13 @@ const addTask = () => {
         id: Date.now(),
         title: title.value,
         description: description.value,
-        completed: false
+        completed: false,
+        priority: 'medium'
     });
 
     title.value = '';
     description.value = '';
+    console.log(tasksList.value);
 }
 
 // Logica para completar una tarea
@@ -86,10 +86,11 @@ const filteredTasks = computed(() => {
 
         <!-- Lista de tareas -->
             <!-- Iterar sobre la lista de tareas -->
-            
             <div v-for="(task, index) in filteredTasks" :key="index">
+                <input type="checkbox" v-model="tasksList[index].completed">
                 <input type="text" v-model="tasksList[index].title">
                 <input type="text" v-model="tasksList[index].description">
+                <label for=""> Prioridad: {{ task.priority }}</label>
                 <h1 placeholder="Title"></h1>
                 <button @click="completeTask(task.id)">
                     Complete
@@ -113,5 +114,7 @@ const filteredTasks = computed(() => {
 </template>
 
 <style scoped>
-
+button {
+    background-color: skyblue;
+}
 </style>
