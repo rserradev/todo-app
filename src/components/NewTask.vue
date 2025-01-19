@@ -61,17 +61,20 @@ const filteredTasks = computed(() => {
 
 <template>
     <div id="create-task-container">
-        <h1>Task List</h1>
 
-        <input v-model="title" placeholder="Title" />
-        <br>
-        
-        <!-- Input para añadir una nueva tarea -->
-        <input v-model="description" type="text" placeholder="Type description of the task" />
-        
-        <!-- Botón para añadir la tarea -->
-        <button @click="addTask()"> Add Task</button>
-        
+        <div id="input-task-container">
+            <h1>Task List</h1>
+
+            <!-- Input task title -->
+            <input v-model="title" placeholder="Title" />
+
+            <!-- Input task description -->
+            <input v-model="description" type="text" placeholder="Type description of the task" />
+
+            <!-- Button to add a new task -->
+            <button @click="addTask()"> Add Task</button>
+        </div>
+
         <select v-model="filter" name="filter" id="filter" placeholder="Filter" required>
             <option value="true">
                 Completed
@@ -85,13 +88,15 @@ const filteredTasks = computed(() => {
         </select>
 
         <!-- Lista de tareas -->
-            <!-- Iterar sobre la lista de tareas -->
-            <div v-for="(task, index) in filteredTasks" :key="index">
+        <!-- Iterar sobre la lista de tareas -->
+
+        <div id="task-list-container">
+            <div v-for="(task, index) in filteredTasks" :key="index" id="task-container">
+                <h2 placeholder="Title"> {{ task.title }}</h2>
                 <input type="checkbox" v-model="tasksList[index].completed">
                 <input type="text" v-model="tasksList[index].title">
                 <input type="text" v-model="tasksList[index].description">
                 <label for=""> Prioridad: {{ task.priority }}</label>
-                <h1 placeholder="Title"></h1>
                 <button @click="completeTask(task.id)">
                     Complete
                 </button>
@@ -104,17 +109,66 @@ const filteredTasks = computed(() => {
                     Delete
                 </button>
             </div>
-            
-            <!-- Lista de tareas eliminadas -->
-            <h2>Deleted Tasks</h2>
-            <li v-for="(task, index) in deletedTasks" :key="index">
-                {{ task.title }}
-            </li>
+        </div>
     </div>
+
+    <!-- Lista de tareas eliminadas
+    <h2>Deleted Tasks</h2>
+    <li v-for="(task, index) in deletedTasks" :key="index">
+        {{ task.title }}
+    </li> -->
 </template>
 
 <style scoped>
 button {
     background-color: skyblue;
+    margin: auto;
+}
+
+#create-task-container {
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    margin: 10px;
+}
+
+#input-task-container {
+    display: grid;
+    width: 30%;
+    margin: auto;
+    /* Ocupamos todo el espacio disponible */
+    row-gap: 5px;
+    /* Espacio entre filas */
+    padding: 10px;
+    /* Espacio entre contenido y borde */
+    background-color: white;
+
+    /* Bordes */
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: white;
+
+}
+
+#task-container {
+    display: grid;
+    margin: 5px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: black;
+    padding: 10px;
+    background-color: white;
+
+}
+
+#task-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 </style>
