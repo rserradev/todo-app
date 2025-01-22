@@ -7,12 +7,14 @@ import SidebarMenu from './components/SidebarMenu.vue'
 
 <template>
   <div class="layout">
+    <!-- Sidebar con el menú -->
     <div class="sidebar">
       <SidebarMenu />
     </div>
     
-    <div class="new-task-container">
-      <NewTask/>
+    <!-- Contenedor para las vistas dinámicas -->
+    <div class="content">
+      <RouterView/> <!-- Renderiza las vistas dinámicas aquí -->
     </div>
   </div>
 </template>
