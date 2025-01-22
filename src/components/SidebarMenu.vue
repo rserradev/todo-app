@@ -1,22 +1,14 @@
-<script>
+<script setup>
 
 </script>
 
 <template>
-    <div class="sidebar-menu-container">
-        <h1>Menu</h1>
-        <ul>
-            <li>
-                <a href="#">Home</a>
-            </li>
-            <li>
-                <a href="#">Trash</a>
-            </li>
-            <li>
-                <a href="#">Settings</a>
-            </li>
-        </ul>
-    </div>
+  <div class="sidebar-menu-container">
+    <h1>Menu</h1>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/Trash">Trash</RouterLink>
+    <RouterLink to="/Settings">Settings</RouterLink>
+  </div>
 </template>
 
 <style scoped>

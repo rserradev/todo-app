@@ -138,7 +138,8 @@ h1 {
 #input-task-container {
     display: grid;
     width: 30%;
-    margin: auto;
+    margin: 10px auto;
+    /* margin: auto;k */
     /* Ocupamos todo el espacio disponible */
     row-gap: 5px;
     /* Espacio entre filas */
@@ -151,7 +152,6 @@ h1 {
     border-radius: 10px;
     border-width: 2px;
     border-color: white;
-
 }
 
 #task-container {
