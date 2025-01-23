@@ -39,4 +39,8 @@ import SidebarMenu from './components/SidebarMenu.vue'
   justify-content: center; /* Centramos los hijos horizontalmente */
   background-color: green;
 }
+
+.content {
+  width: 100%; /* El contenido ocupa todo el ancho de la pantalla */
+}
 </style>

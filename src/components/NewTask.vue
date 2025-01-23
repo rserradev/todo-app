@@ -131,15 +131,20 @@ button {
 
 h1 {
     text-align: center;
-    font-size: 30px;
-    margin: 10px;
+    text-wrap: auto;
+}
+
+input {
+    width: 50%;
 }
 
 #input-task-container {
-    display: grid;
-    width: 30%;
-    margin: 10px auto;
-    /* margin: auto;k */
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    align-items: center;
+
     /* Ocupamos todo el espacio disponible */
     row-gap: 5px;
     /* Espacio entre filas */
@@ -147,6 +152,9 @@ h1 {
     /* Espacio entre contenido y borde */
     background-color: white;
 
+    box-sizing: border-box;
+
+    
     /* Bordes */
     border-style: solid;
     border-radius: 10px;
