@@ -1,6 +1,4 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <div class="sidebar-menu-container">
@@ -12,5 +10,12 @@
 </template>
 
 <style scoped>
-
+.sidebar-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fefefe;
+  height: 100%;
+  padding-top: 20px;
+}
 </style>

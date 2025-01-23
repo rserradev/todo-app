@@ -87,16 +87,14 @@ const filteredTasks = computed(() => {
             </option>
         </select>
 
-        <!-- Lista de tareas -->
-        <!-- Iterar sobre la lista de tareas -->
-
         <div id="task-list-container">
-            <div v-for="(task, index) in filteredTasks" :key="index" id="task-container">
+            <div v-for="(task, index) in filteredTasks" :key="index" id="task-card">
                 <h2 placeholder="Title"> {{ task.title }}</h2>
                 <input type="checkbox" v-model="tasksList[index].completed">
                 <input type="text" v-model="tasksList[index].title">
                 <input type="text" v-model="tasksList[index].description">
                 <label for=""> Prioridad: {{ task.priority }}</label>
+
                 <button @click="completeTask(task.id)">
                     Complete
                 </button>
@@ -127,6 +125,7 @@ button {
 
 #create-task-container {
     width: 100%;
+    background-color: #4797FF;
 }
 
 h1 {
@@ -142,7 +141,7 @@ input {
     display: flex;
     flex-direction: column;
     width: 50%;
-    margin: 0 auto;
+    margin: 10px auto ;
     align-items: center;
 
     /* Ocupamos todo el espacio disponible */
@@ -154,7 +153,6 @@ input {
 
     box-sizing: border-box;
 
-    
     /* Bordes */
     border-style: solid;
     border-radius: 10px;
@@ -162,16 +160,14 @@ input {
     border-color: white;
 }
 
-#task-container {
+#task-card {
     display: grid;
     margin: 5px;
-    border-style: solid;
     border-radius: 10px;
     border-width: 1px;
-    border-color: black;
+    border-color: gray;
     padding: 10px;
     background-color: white;
-
 }
 
 #task-list-container {
