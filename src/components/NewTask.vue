@@ -1,13 +1,24 @@
 <script setup>
 import { ref } from 'vue';
 import { computed } from 'vue';
+import { useTasksStore } from '@/stores/tasks';
 
 // Variables
 const title = ref(''); // Titulo de la tarea
 const description = ref(''); // Nueva Tarea
 const tasksList = ref([]); // Lista de Tareas
-const deletedTasks = ref([]); // Lista de tareas eliminadas
 const filter = ref('false'); // Filtro de tareas
+
+// Instancia de la store
+const tasksStore = useTasksStore();
+
+// Acceso al state (propiedades - variables)
+const pendingTasks = tasksStore.pendingTasks;
+console.log(pendingTasks)
+
+const deletedTasks = tasksStore.deletedTasks;
+
+// Acceso a las actions (metodos - funciones)
 
 // Funcion para añadir una nueva tarea como un objeto en la lista de tareas
 const addTask = () => {
@@ -37,15 +48,6 @@ const modifyTask = (id) => {
     const task = tasksList.value.find(task => task.id === id);
 }
 
-// Funcion para eliminar una tarea
-const deleteTask = (id) => {
-    if (window.confirm('Esta seguro que quiere eliminar la tarea?') === true) {
-        const task = tasksList.value.find(task => task.id === id); // Busca la tarea por el id
-        deletedTasks.value.push(task); // Añade la tarea eliminada al array de tareas eliminadas
-        tasksList.value = tasksList.value.filter(task => task.id !== id); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
-    }
-}
-
 // Funcion para filtrar las tareas
 const filteredTasks = computed(() => {
     if (filter.value === 'all') {
@@ -56,7 +58,6 @@ const filteredTasks = computed(() => {
         return tasksList.value.filter(task => !task.completed);
     }
 });
-
 </script>
 
 <template>
@@ -110,11 +111,11 @@ const filteredTasks = computed(() => {
         </div>
     </div>
 
-    <!-- Lista de tareas eliminadas
+    Lista de tareas eliminadas
     <h2>Deleted Tasks</h2>
     <li v-for="(task, index) in deletedTasks" :key="index">
         {{ task.title }}
-    </li> -->
+    </li>
 </template>
 
 <style scoped>
