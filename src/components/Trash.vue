@@ -1,10 +1,15 @@
-<script>
+<script setup>
+import { useTasksStore } from '@/stores/tasks';
 
+const tasksStore = useTasksStore();
+const deletedTasks = tasksStore.deletedTasks;
+console.log(deletedTasks)
 </script>
 
 <template>
-    <h1>Trash</h1>
-    <p>Aquí se muestran los elementos eliminados</p>
+    <li v-for="deletedTask in deletedTasks">
+        {{ deletedTask }}
+    </li>
 </template>
 
 <style scoped>
