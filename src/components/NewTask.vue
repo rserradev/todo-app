@@ -16,26 +16,8 @@ const tasksStore = useTasksStore();
 const pendingTasks = tasksStore.pendingTasks;
 console.log(pendingTasks)
 
-const deletedTasks = tasksStore.deletedTasks;
-
 // Acceso a las actions (metodos - funciones)
 
-// Funcion para añadir una nueva tarea como un objeto en la lista de tareas
-const addTask = () => {
-    if (title.value === '' || description.value === '') return;
-
-    tasksList.value.push({
-        id: Date.now(),
-        title: title.value,
-        description: description.value,
-        completed: false,
-        priority: 'medium'
-    });
-
-    title.value = '';
-    description.value = '';
-    console.log(tasksList.value);
-}
 
 // Logica para completar una tarea
 const completeTask = (id) => {
@@ -71,7 +53,7 @@ const filteredTasks = computed(() => {
 
             <!-- Input task description -->
             <input v-model="description" type="text" placeholder="Type description of the task" />
-
+            {{ pendingTasks }}
             <!-- Button to add a new task -->
             <button @click="addTask()"> Add Task</button>
         </div>
@@ -110,12 +92,6 @@ const filteredTasks = computed(() => {
             </div>
         </div>
     </div>
-
-    Lista de tareas eliminadas
-    <h2>Deleted Tasks</h2>
-    <li v-for="(task, index) in deletedTasks" :key="index">
-        {{ task.title }}
-    </li>
 </template>
 
 <style scoped>

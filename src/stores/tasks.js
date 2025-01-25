@@ -6,7 +6,7 @@ export const useTasksStore = defineStore('taskStore', () => {
     const pendingTasks = ref([
         {
             id: 1,
-            title: 'Example Task',
+            title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
         }
@@ -14,8 +14,8 @@ export const useTasksStore = defineStore('taskStore', () => {
     const deletedTasks = ref([
         {
             id: 2,
-            title: 'Example Task',
-            description: 'This is an example pending task.',
+            title: 'Example deleted Task',
+            description: 'This is an example deleted task.',
             completed: false,
         }
     ]);
