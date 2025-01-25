@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 export const useTasksStore = defineStore('taskStore', () => {
     // Estado reactivo
+
     const pendingTasks = ref([
         {
             id: 1,
@@ -20,8 +21,15 @@ export const useTasksStore = defineStore('taskStore', () => {
         }
     ]);
 
+    const title = ref('');
+    const description = ref('');
     // Métodos
-    const addTask = (title, description) => {
+    const addTask = () => {
+        if (title.value === '' || description.value === '') {
+            alert('Tiene campos vacios');
+            return;
+        }
+
         pendingTasks.value.push({
             id: Date.now(),
             title: title.value,
@@ -29,6 +37,15 @@ export const useTasksStore = defineStore('taskStore', () => {
             completed: false,
             priority: 'medium'
         })
+
+        console.log('Título antes:', title.value);
+        console.log('Descripción antes:', description.value);
+        title.value = '';
+        description.value = '';
+        console.log('Título después:', title.value);
+        console.log('Descripción después:', description.value); 
+        console.log(pendingTasks.value);
+        alert('add task');
     };
 
     const deleteTask = (taskId) => {
@@ -39,5 +56,11 @@ export const useTasksStore = defineStore('taskStore', () => {
         }
     }
 
-    return {pendingTasks, deletedTasks, addTask}
+    return {
+        title,
+        description,
+        pendingTasks,
+        deletedTasks,
+        addTask
+    }
 });
