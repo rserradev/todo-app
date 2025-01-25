@@ -2,62 +2,18 @@
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useTasksStore } from '@/stores/tasks';
-
-// Variables
-const title = ref(''); // Titulo de la tarea
-const description = ref(''); // Nueva Tarea
-const tasksList = ref([]); // Lista de Tareas
-const filter = ref('false'); // Filtro de tareas
+import { storeToRefs } from 'pinia';
 
 // Instancia de la store
 const tasksStore = useTasksStore();
 
 // Acceso al state (propiedades - variables)
-const pendingTasks = tasksStore.pendingTasks;
-console.log(pendingTasks)
+const { title, description, pendingTasks } = storeToRefs(tasksStore);
 
-const deletedTasks = tasksStore.deletedTasks;
-
+console.log(title, description);
 // Acceso a las actions (metodos - funciones)
+const addTask = tasksStore.addTask;
 
-// Funcion para añadir una nueva tarea como un objeto en la lista de tareas
-const addTask = () => {
-    if (title.value === '' || description.value === '') return;
-
-    tasksList.value.push({
-        id: Date.now(),
-        title: title.value,
-        description: description.value,
-        completed: false,
-        priority: 'medium'
-    });
-
-    title.value = '';
-    description.value = '';
-    console.log(tasksList.value);
-}
-
-// Logica para completar una tarea
-const completeTask = (id) => {
-    const task = tasksList.value.find(task => task.id === id);
-    task.completed = !task.completed;
-}
-
-// Logica para modificar una tarea
-const modifyTask = (id) => {
-    const task = tasksList.value.find(task => task.id === id);
-}
-
-// Funcion para filtrar las tareas
-const filteredTasks = computed(() => {
-    if (filter.value === 'all') {
-        return tasksList.value;
-    } else if (filter.value === 'true') {
-        return tasksList.value.filter(task => task.completed);
-    } else if (filter.value === 'false') {
-        return tasksList.value.filter(task => !task.completed);
-    }
-});
 </script>
 
 <template>
@@ -66,17 +22,19 @@ const filteredTasks = computed(() => {
         <div id="input-task-container">
             <h1>Task List</h1>
 
-            <!-- Input task title -->
-            <input v-model="title" placeholder="Title" />
+            <!-- Campo de entrada para el título -->
+            <input v-model="title" placeholder="Título de la tarea" />
 
-            <!-- Input task description -->
-            <input v-model="description" type="text" placeholder="Type description of the task" />
+            <!-- Campo de entrada para la descripción -->
+            <textarea v-model="description" placeholder="Descripción de la tarea"></textarea>
 
-            <!-- Button to add a new task -->
-            <button @click="addTask()"> Add Task</button>
+            <!-- Botón para agregar tarea -->
+            <button @click="addTask">Agregar Tarea</button>
         </div>
+        
+        {{ pendingTasks }}
 
-        <select v-model="filter" name="filter" id="filter" placeholder="Filter" required>
+        <!-- <select v-model="filter" name="filter" id="filter" placeholder="Filter" required>
             <option value="true">
                 Completed
             </option>
@@ -86,14 +44,13 @@ const filteredTasks = computed(() => {
             <option value="all">
                 All
             </option>
-        </select>
+        </select> -->
 
         <div id="task-list-container">
-            <div v-for="(task, index) in filteredTasks" :key="index" id="task-card">
+            <div v-for="(task, index) in pendingTasks" :key="index" id="task-card">
                 <h2 placeholder="Title"> {{ task.title }}</h2>
-                <input type="checkbox" v-model="tasksList[index].completed">
-                <input type="text" v-model="tasksList[index].title">
-                <input type="text" v-model="tasksList[index].description">
+                <input type="text"> {{ task.description }}
+                <input type="checkbox" > {{ task.completed }}
                 <label for=""> Prioridad: {{ task.priority }}</label>
 
                 <button @click="completeTask(task.id)">
@@ -110,12 +67,6 @@ const filteredTasks = computed(() => {
             </div>
         </div>
     </div>
-
-    Lista de tareas eliminadas
-    <h2>Deleted Tasks</h2>
-    <li v-for="(task, index) in deletedTasks" :key="index">
-        {{ task.title }}
-    </li>
 </template>
 
 <style scoped>
