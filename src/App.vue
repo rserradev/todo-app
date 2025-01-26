@@ -11,9 +11,9 @@ import NavbarMenu from './components/NavbarMenu.vue';
   <NavbarMenu/>
   <div class="layout">
     <!-- Sidebar con el menú -->
-    <div class="sidebar">
+    <nav class="sidebar">
       <SidebarMenu />
-    </div>
+    </nav>
     
     <!-- Contenedor para las vistas dinámicas -->
     <div class="content">
@@ -27,12 +27,10 @@ import NavbarMenu from './components/NavbarMenu.vue';
   display: flex; /* Activamos flexbox para organizar los hijos en fila (horizontal) */
   width: 100%; /* Ocupamos todo el ancho de la pantalla */
   height: 100vh; /* Ocupamos todo el alto de la pantalla */
-  background-color: #4797FF;
 }
 
 .sidebar {
   width: 200px; /* El sidebar ocupa el 20% del ancho de la pantalla */
-  background-color: #FEFEFE;
   height: 100%;
 }
 
