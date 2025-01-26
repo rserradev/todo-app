@@ -8,32 +8,26 @@ import { storeToRefs } from 'pinia';
 const tasksStore = useTasksStore();
 
 // Acceso al state (propiedades - variables)
-const { title, description, pendingTasks } = storeToRefs(tasksStore);
+const { title, description, pendingTasks} = storeToRefs(tasksStore);
 
 console.log(title, description);
 // Acceso a las actions (metodos - funciones)
 const addTask = tasksStore.addTask;
+const deleteTask = tasksStore.deleteTask;
 
 </script>
 
 <template>
     <div id="create-task-container">
-
+        <h1>Lista de tareas</h1>
         <div id="input-task-container">
-            <h1>Task List</h1>
-
-            <!-- Campo de entrada para el título -->
-            <input v-model="title" placeholder="Título de la tarea" />
-
-            <!-- Campo de entrada para la descripción -->
+            <input v-model="title" placeholder="Nombre de la tarea" />
             <textarea v-model="description" placeholder="Descripción de la tarea"></textarea>
-
-            <!-- Botón para agregar tarea -->
             <button @click="addTask">Agregar Tarea</button>
         </div>
-        
-        {{ pendingTasks }}
-
+    </div>
+    
+    {{ pendingTasks }}
         <!-- <select v-model="filter" name="filter" id="filter" placeholder="Filter" required>
             <option value="true">
                 Completed
@@ -46,70 +40,87 @@ const addTask = tasksStore.addTask;
             </option>
         </select> -->
 
-        <div id="task-list-container">
+        <div id="task-card-container">
             <div v-for="(task, index) in pendingTasks" :key="index" id="task-card">
+                {{ task.id }}
                 <h2 placeholder="Title"> {{ task.title }}</h2>
-                <input type="text"> {{ task.description }}
+                <p>{{ task.description }}</p>
                 <input type="checkbox" > {{ task.completed }}
                 <label for=""> Prioridad: {{ task.priority }}</label>
 
-                <button @click="completeTask(task.id)">
-                    Complete
-                </button>
-
-                <button @click="modifyTask(task.id)">
-                    Modify
-                </button>
-
-                <button @click="deleteTask(task.id)">
-                    Delete
-                </button>
+                <div id="task-card-buttons">
+                    <button @click="completeTask(task.id)">
+                        Complete
+                    </button>
+                    
+                    <button @click="modifyTask(task.id)">
+                        Modify
+                    </button>
+                    
+                    <button @click="deleteTask(task.id)">
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 </template>
 
 <style scoped>
 button {
-    background-color: skyblue;
     margin: auto;
 }
 
-#create-task-container {
+textarea {
+    border: none;
+    resize: none;
     width: 100%;
-    background-color: #4797FF;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+#create-task-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    padding-left: 20px;
 }
 
 h1 {
-    text-align: center;
-    text-wrap: auto;
+    text-align: start;
+    padding-left: 10px
 }
 
 input {
     width: 50%;
+    border: none;
 }
 
 #input-task-container {
     display: flex;
     flex-direction: column;
     width: 50%;
-    margin: 10px auto ;
-    align-items: center;
+    align-items: start;
 
     /* Ocupamos todo el espacio disponible */
     row-gap: 5px;
     /* Espacio entre filas */
     padding: 10px;
     /* Espacio entre contenido y borde */
-    background-color: white;
-
-    box-sizing: border-box;
 
     /* Bordes */
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
-    border-color: white;
+    border-color: #E6E6E6;
+}
+
+
+/* TASK CARD */
+#task-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #task-card {
@@ -122,9 +133,13 @@ input {
     background-color: white;
 }
 
-#task-list-container {
+#task-card-buttons {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
 }
+
+#task-card:hover {
+   transform: scale(1.1);
+   transition: transform 0.2s ease-in-out;
+}
+
 </style>

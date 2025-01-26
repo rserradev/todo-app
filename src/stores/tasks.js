@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useTasksStore = defineStore('taskStore', () => {
+    
     // Estado reactivo
-
     const pendingTasks = ref([
         {
             id: 1,
@@ -37,22 +37,16 @@ export const useTasksStore = defineStore('taskStore', () => {
             completed: false,
             priority: 'medium'
         })
-
-        console.log('Título antes:', title.value);
-        console.log('Descripción antes:', description.value);
         title.value = '';
         description.value = '';
-        console.log('Título después:', title.value);
-        console.log('Descripción después:', description.value); 
-        console.log(pendingTasks.value);
-        alert('add task');
     };
 
     const deleteTask = (taskId) => {
         if (window.confirm('Esta seguro que quiere eliminar la tarea?') === true) {
             const task = pendingTasks.value.find(task => task.taskId === taskId); // Busca la tarea por el id
             deletedTasks.value.push(task); // Añade la tarea eliminada al array de tareas eliminadas
-            pendingTasks.value = pendingTasks.value.filter(task => task.id !== id); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
+            pendingTasks.value = pendingTasks.value.filter(task => task.id !== taskId); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
+
         }
     }
 
@@ -61,6 +55,7 @@ export const useTasksStore = defineStore('taskStore', () => {
         description,
         pendingTasks,
         deletedTasks,
-        addTask
+        addTask,
+        deleteTask
     }
 });

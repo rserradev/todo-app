@@ -1,21 +1,45 @@
 <script setup></script>
 
 <template>
-  <div class="sidebar-menu-container">
-    <h1>Menu</h1>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/Trash">Trash</RouterLink>
-    <RouterLink to="/Settings">Settings</RouterLink>
-  </div>
+  <nav class="sidebar-menu-container">
+    <div id="user-info">
+      <p>Username</p>
+      <p>Logout</p>
+    </div>
+    
+    <div id="menu-items">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/Trash">Trash</RouterLink>
+      <RouterLink to="/Settings">Settings</RouterLink>
+    </div>
+  </nav>
 </template>
 
 <style scoped>
 .sidebar-menu-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #fefefe;
+  background-color: #EEEEEE;
   height: 100%;
-  padding-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: start;
+  padding-left: ;
 }
+
+#user-info {
+  display: flex;
+  font-size: 15px;
+  justify-content: space-between; /* Centramos los hijos horizontalmente */
+  box-sizing: border-box; /* Incluimos el padding y el border en el tamaño del contenedor */
+  padding: 5px;
+}
+
+#menu-items {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  padding-left: 010px;
+}
+
 </style>
