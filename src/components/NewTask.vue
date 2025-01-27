@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { computed } from 'vue';
 import { useTasksStore } from '@/stores/tasks';
 import { storeToRefs } from 'pinia';
+import BaseButton from './ui/BaseButton.vue';
 
 // Instancia de la store
 const tasksStore = useTasksStore();
@@ -53,13 +54,12 @@ const deleteTask = tasksStore.deleteTask;
                         Complete
                     </button>
                     
+                    
                     <button @click="modifyTask(task.id)">
                         Modify
                     </button>
-                    
-                    <button @click="deleteTask(task.id)">
-                        Delete
-                    </button>
+                        
+                    <BaseButton @click="deleteTask(task.id)">Delete</BaseButton>
                 </div>
             </div>
         </div>
