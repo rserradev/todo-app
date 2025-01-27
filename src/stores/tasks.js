@@ -10,14 +10,17 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
+            priority: 'medium'
         }
     ]);
+
     const deletedTasks = ref([
         {
             id: 2,
             title: 'Example deleted Task',
             description: 'This is an example deleted task.',
             completed: false,
+            priority: 'medium'
         }
     ]);
 
@@ -42,13 +45,19 @@ export const useTasksStore = defineStore('taskStore', () => {
     };
 
     const deleteTask = (taskId) => {
+        console.log('Eliminando tarea con ID:', taskId);
         if (window.confirm('Esta seguro que quiere eliminar la tarea?') === true) {
-            const task = pendingTasks.value.find(task => task.taskId === taskId); // Busca la tarea por el id
+            const task = pendingTasks.value.find(task => task.id === taskId); // Busca la tarea por el id
+            console.log('Tarea encontrada:', task);
             deletedTasks.value.push(task); // Añade la tarea eliminada al array de tareas eliminadas
             pendingTasks.value = pendingTasks.value.filter(task => task.id !== taskId); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
-
+            console.log('Tarea eliminada:', task);
+            console.log('Tareas eliminadas:', deletedTasks.value);
+            console.log('Tareas pendientes:', pendingTasks.value);   
         }
     }
+
+    console.log()
 
     return {
         title,
