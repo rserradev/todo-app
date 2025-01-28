@@ -24,7 +24,6 @@
   width: 100%;
   box-sizing: border-box;
   text-align: start;
-  padding-left: ;
 }
 
 #user-info {
