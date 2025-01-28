@@ -57,7 +57,16 @@ export const useTasksStore = defineStore('taskStore', () => {
         }
     }
 
-    console.log()
+    const completeTask = (taskId) => {
+        const task = pendingTasks.value.find(task => task.id === taskId);
+        if (task.completed === true) {
+            alert('La tarea ya fue completada');
+            console.log('La tarea ya fue completada');
+            return;
+        }
+        task.completed = true;
+        console.log('Tarea completada:', task);
+    }
 
     return {
         title,
@@ -65,6 +74,7 @@ export const useTasksStore = defineStore('taskStore', () => {
         pendingTasks,
         deletedTasks,
         addTask,
-        deleteTask
+        deleteTask,
+        completeTask
     }
 });

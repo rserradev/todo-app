@@ -4,17 +4,19 @@ import { computed } from 'vue';
 import { useTasksStore } from '@/stores/tasks';
 import { storeToRefs } from 'pinia';
 import BaseButton from './ui/BaseButton.vue';
+import TodoItem from './tasks/TodoItem.vue';
 
 // Instancia de la store
 const tasksStore = useTasksStore();
 
 // Acceso al state (propiedades - variables)
-const { title, description, pendingTasks} = storeToRefs(tasksStore);
+const { title, description, pendingTasks } = storeToRefs(tasksStore);
 
 console.log(title, description);
 // Acceso a las actions (metodos - funciones)
 const addTask = tasksStore.addTask;
 const deleteTask = tasksStore.deleteTask;
+const completeTask = tasksStore.completeTask;
 
 </script>
 
@@ -27,45 +29,50 @@ const deleteTask = tasksStore.deleteTask;
             <button @click="addTask">Agregar Tarea</button>
         </div>
     </div>
-    
-    {{ pendingTasks }}
-        <!-- <select v-model="filter" name="filter" id="filter" placeholder="Filter" required>
-            <option value="true">
-                Completed
-            </option>
-            <option value="false">
-                Uncompleted
-            </option>
-            <option value="all">
-                All
-            </option>
-        </select> -->
 
-        <div id="task-card-container">
-            <div v-for="(task, index) in pendingTasks" :key="index" id="task-card">
-                {{ task.id }}
-                <h2 placeholder="Title"> {{ task.title }}</h2>
-                <p>{{ task.description }}</p>
-                <input type="checkbox" > {{ task.completed }}
-                <label for=""> Prioridad: {{ task.priority }}</label>
+    <div id="task-card-container">
+        <div
+         v-for="(task, index) in pendingTasks"
+         :key="index" id="task-card"
+        >
+            {{ task.id }} - {{ task.completed }}
 
-                <div id="task-card-buttons">
-                    <button @click="completeTask(task.id)">
-                        Complete
-                    </button>
-                    
-                    
-                    <button @click="modifyTask(task.id)">
-                        Modify
-                    </button>
-                        
-                    <BaseButton @click="deleteTask(task.id)">Delete</BaseButton>
-                </div>
+            <div>
+                <input type="checkbox">
+                <h2 
+                    placeholder="Title"
+                    :class="{ completed: task.completed, pending: !task.completed }"
+                    @click="toggleTask(task.id)"
+                > {{ task.title }}</h2>
+            </div>
+
+            <p>{{ task.description }}</p>
+            <label for=""> Prioridad: {{ task.priority }}</label>
+
+            <div id="task-card-buttons">
+                <BaseButton style="background-color: skyblue" @click="completeTask(task.id)">
+                    Complete
+                </BaseButton>
+
+                <button @click="modifyTask(task.id)">
+                    Modify
+                </button>
+                
+                <BaseButton style="background-color: #FF0000" @click="deleteTask(task.id)">Delete</BaseButton>
             </div>
         </div>
+    </div>
 </template>
 
 <style scoped>
+.completed {
+    text-decoration: line-through;
+}
+
+.pending {
+    text-decoration: none;
+}
+
 button {
     margin: auto;
 }
@@ -89,6 +96,18 @@ textarea {
 h1 {
     text-align: start;
     padding-left: 10px
+}
+
+h2 {
+    text-align: start;
+    padding-left: 10px;
+    margin: 5px;
+}
+
+p {
+    text-align: start;
+    padding-left: 10px;
+    margin: 5px;
 }
 
 input {
@@ -115,21 +134,23 @@ input {
     border-color: #E6E6E6;
 }
 
-
 /* TASK CARD */
 #task-card-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
 }
 
 #task-card {
     display: grid;
     margin: 5px;
+
     border-radius: 10px;
     border-width: 1px;
-    border-color: gray;
-    padding: 10px;
+    border-style: solid;
+    border-color: #E6E6E6;
+
+    padding: auto;
     background-color: white;
 }
 
@@ -138,8 +159,7 @@ input {
 }
 
 #task-card:hover {
-   transform: scale(1.1);
-   transition: transform 0.2s ease-in-out;
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
 }
-
 </style>
