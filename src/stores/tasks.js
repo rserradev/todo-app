@@ -10,13 +10,27 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
+            priority: 'high'
+        }, 
+        {
+            id: 2,
+            title: 'Example pending Task',
+            description: 'This is an example pending task.',
+            completed: false,
             priority: 'medium'
+        },
+        {
+            id: 3,
+            title: 'Example pending Task',
+            description: 'This is an example pending task.',
+            completed: false,
+            priority: 'low'
         }
     ]);
 
     const deletedTasks = ref([
         {
-            id: 2,
+            id: 5,
             title: 'Example deleted Task',
             description: 'This is an example deleted task.',
             completed: false,
@@ -26,6 +40,11 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const title = ref('');
     const description = ref('');
+
+    const fechaHora = new Date();
+    const fecha = fechaHora.toLocaleDateString();
+    const hora = fechaHora.toLocaleTimeString();
+
     // Métodos
     const addTask = () => {
         if (title.value === '' || description.value === '') {
@@ -38,7 +57,8 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: title.value,
             description: description.value,
             completed: false,
-            priority: 'medium'
+            priority: 'medium',
+            createdAt: fecha + ' ' + hora,
         })
         title.value = '';
         description.value = '';
@@ -65,7 +85,6 @@ export const useTasksStore = defineStore('taskStore', () => {
             return;
         }
         task.completed = true;
-        console.log('Tarea completada:', task);
     }
 
     return {

@@ -1,3 +1,59 @@
+<!-- TEMPLATE -->
+<template>
+    <div id="sort-by-container">
+        <label for="">Ordenar por:</label>
+        <select name="" id="sort-by" v-model="sortCriteria">
+            <option value="priority">Prioridad</option>
+            <option value="createdAt">Fecha de creación</option>
+            <option value="expiredAt">Fecha de vencimiento</option>
+            <option value="title">Título</option>
+        </select>
+
+        <!-- <select v-model="sortOrder">
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+        </select> -->
+    </div>
+
+    <div id="create-task-container">
+        <h1>Lista de tareas</h1>
+        <div id="input-task-container">
+            <input v-model="title" placeholder="Nombre de la tarea" />
+            <textarea v-model="description" placeholder="Descripción de la tarea"></textarea>
+            <button @click="addTask">Agregar Tarea</button>
+        </div>
+    </div>
+
+    <div id="task-card-container">
+        <div v-for="(task, id) in sortedTasks" :key="id" id="task-card">
+            {{ task.id }} - {{ task.completed }} - {{ task.priority }}
+
+            <div>
+                <input type="checkbox">
+                <h2 placeholder="Title" :class="{ completed: task.completed, pending: !task.completed }"
+                    @click="toggleTask(task.id)"> {{ task.title }}</h2>
+            </div>
+
+            <p>{{ task.description }}</p>
+            <label for=""> Prioridad: {{ task.priority }}</label>
+            <label for=""> Fecha de creación: {{ task.createdAt }}</label>
+
+            <div id="task-card-buttons">
+                <BaseButton style="background-color: skyblue" @click="completeTask(task.id)">
+                    Complete
+                </BaseButton>
+
+                <button @click="modifyTask(task.id)">
+                    Modify
+                </button>
+
+                <BaseButton style="background-color: #FF0000" @click="deleteTask(task.id)">Delete</BaseButton>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- SCRIPT -->
 <script setup>
 import { ref } from 'vue';
 import { computed } from 'vue';
@@ -11,60 +67,43 @@ const tasksStore = useTasksStore();
 
 // Acceso al state (propiedades - variables)
 const { title, description, pendingTasks } = storeToRefs(tasksStore);
+const sortCriteria = ref('createdAt');
 
-console.log(title, description);
 // Acceso a las actions (metodos - funciones)
 const addTask = tasksStore.addTask;
 const deleteTask = tasksStore.deleteTask;
 const completeTask = tasksStore.completeTask;
 
+const priorities = {
+    low: 1,
+    medium: 2,
+    high: 3
+}
+
+const sortedTasks = computed(() => {
+    return [...pendingTasks.value].sort((a, b) => {
+        switch (sortCriteria.value) {
+            case 'priority':
+                const aPriority = priorities[a.priority];
+                const bPriority = priorities[b.priority];
+                console.log(bPriority, aPriority);
+                return aPriority - bPriority;
+        }
+    });
+});
+
+console.log(sortedTasks.value);
 </script>
 
-<template>
-    <div id="create-task-container">
-        <h1>Lista de tareas</h1>
-        <div id="input-task-container">
-            <input v-model="title" placeholder="Nombre de la tarea" />
-            <textarea v-model="description" placeholder="Descripción de la tarea"></textarea>
-            <button @click="addTask">Agregar Tarea</button>
-        </div>
-    </div>
-
-    <div id="task-card-container">
-        <div
-         v-for="(task, index) in pendingTasks"
-         :key="index" id="task-card"
-        >
-            {{ task.id }} - {{ task.completed }}
-
-            <div>
-                <input type="checkbox">
-                <h2 
-                    placeholder="Title"
-                    :class="{ completed: task.completed, pending: !task.completed }"
-                    @click="toggleTask(task.id)"
-                > {{ task.title }}</h2>
-            </div>
-
-            <p>{{ task.description }}</p>
-            <label for=""> Prioridad: {{ task.priority }}</label>
-
-            <div id="task-card-buttons">
-                <BaseButton style="background-color: skyblue" @click="completeTask(task.id)">
-                    Complete
-                </BaseButton>
-
-                <button @click="modifyTask(task.id)">
-                    Modify
-                </button>
-                
-                <BaseButton style="background-color: #FF0000" @click="deleteTask(task.id)">Delete</BaseButton>
-            </div>
-        </div>
-    </div>
-</template>
-
+<!-- ESTILOS PARA EL COMPONENTE -->
 <style scoped>
+#sort-by-container {
+    display: flex;
+    flex-direction: row;
+    padding: auto;
+    margin: auto;
+}
+
 .completed {
     text-decoration: line-through;
 }
