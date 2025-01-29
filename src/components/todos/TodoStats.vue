@@ -1,0 +1,1 @@
+// TODO: Componente para mostrar estadísticas de tareas (por ejemplo, número de tareas pendientes)

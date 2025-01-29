@@ -62,6 +62,7 @@ export const useTasksStore = defineStore('taskStore', () => {
         })
         title.value = '';
         description.value = '';
+        console.log('Tareas pendientes:', pendingTasks.value);
     };
 
     const deleteTask = (taskId) => {

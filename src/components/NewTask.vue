@@ -16,40 +16,10 @@
     </div>
 
     <div id="create-task-container">
-        <h1>Lista de tareas</h1>
-        <div id="input-task-container">
-            <input v-model="title" placeholder="Nombre de la tarea" />
-            <textarea v-model="description" placeholder="Descripción de la tarea"></textarea>
-            <button @click="addTask">Agregar Tarea</button>
-        </div>
     </div>
 
     <div id="task-card-container">
-        <div v-for="(task, id) in sortedTasks" :key="id" id="task-card">
-            {{ task.id }} - {{ task.completed }} - {{ task.priority }}
-
-            <div>
-                <input type="checkbox">
-                <h2 placeholder="Title" :class="{ completed: task.completed, pending: !task.completed }"
-                    @click="toggleTask(task.id)"> {{ task.title }}</h2>
-            </div>
-
-            <p>{{ task.description }}</p>
-            <label for=""> Prioridad: {{ task.priority }}</label>
-            <label for=""> Fecha de creación: {{ task.createdAt }}</label>
-
-            <div id="task-card-buttons">
-                <BaseButton style="background-color: skyblue" @click="completeTask(task.id)">
-                    Complete
-                </BaseButton>
-
-                <button @click="modifyTask(task.id)">
-                    Modify
-                </button>
-
-                <BaseButton style="background-color: #FF0000" @click="deleteTask(task.id)">Delete</BaseButton>
-            </div>
-        </div>
+       
     </div>
 </template>
 
@@ -58,9 +28,8 @@
 import { ref } from 'vue';
 import { computed } from 'vue';
 import { useTasksStore } from '@/stores/tasks';
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'; // Importamos la función storeToRefs de Pinia
 import BaseButton from './ui/BaseButton.vue';
-import TodoItem from './tasks/TodoItem.vue';
 
 // Instancia de la store
 const tasksStore = useTasksStore();
@@ -174,24 +143,6 @@ input {
 }
 
 /* TASK CARD */
-#task-card-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#task-card {
-    display: grid;
-    margin: 5px;
-
-    border-radius: 10px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #E6E6E6;
-
-    padding: auto;
-    background-color: white;
-}
 
 #task-card-buttons {
     display: flex;

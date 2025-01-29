@@ -1,19 +1,12 @@
-<script setup>
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
-import NewTask from './components/NewTask.vue'
-import SidebarMenu from './components/SidebarMenu.vue'
-import NavbarMenu from './components/NavbarMenu.vue';
-</script>
-
 <template>
-  <!-- Layout de la aplicación -->
   <NavbarMenu/>
   <div class="layout">
-    <!-- Sidebar con el menú -->
-    <nav class="sidebar">
-      <SidebarMenu />
+    <!-- TODO: MIGRAR Y ELIMINAR EL SIDEBAR MENU -->
+    <nav class="sidebar">  
+    <SidebarMenu />
+    <Sidebar/>
     </nav>
+
     
     <!-- Contenedor para las vistas dinámicas -->
     <div class="content">
@@ -21,6 +14,13 @@ import NavbarMenu from './components/NavbarMenu.vue';
     </div>
   </div>
 </template>
+
+<script setup>
+import SidebarMenu from './components/SidebarMenu.vue'
+import NavbarMenu from './components/NavbarMenu.vue';
+import Sidebar from './components/layout/Sidebar.vue';
+
+</script>
 
 <style scoped>
 .layout {
