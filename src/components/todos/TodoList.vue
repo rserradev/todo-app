@@ -4,7 +4,7 @@
         <TodoItem
             id="task-card"
             v-for="(task, id) in pendingTasks"
-            :key="id"
+            :key="task.id"
             :task="task"
         />
     </div>

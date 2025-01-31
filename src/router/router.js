@@ -5,9 +5,11 @@ import NewTask from '@/components/NewTask.vue';
 import Trash from '@/components/Trash.vue';
 import Settings from '@/components/Settings.vue';
 import TodosView from '@/views/TodosView.vue';
+import TodosCompletedView from '@/views/TodosCompletedView.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: TodosView },
+  { path: '/Completed', name: 'Completed', component: TodosCompletedView },
   { path: '/NewTask', name: 'NewTask', component: NewTask },
   { path: '/Trash', name: 'Trash', component: Trash },
   { path: '/Settings', name: 'Settings', component: Settings }

@@ -1,12 +1,17 @@
 <template>
     <div id="todo-item-container">
         <div id="todo-item">
-
             <p>ID: {{ task.id }} | Prioridad: {{ task.priority }}</p>
             
-            <div>
-                <input type="checkbox" :checked="task.completed" @change="toggleTask(task.id)">
-                <h2 :class="{ completed: task.completed, pending: !task.completed }">
+            <div id="todo-item-title">
+                <input
+                    :checked="task.completed"
+                    @change="completeTask(task.id)"
+                    type="checkbox"
+                />
+
+                <h2 
+                    :class="{ completed: task.completed, pending: !task.completed }">
                     {{ task.title }}
                 </h2>
             </div>
@@ -14,15 +19,7 @@
             <p>{{ task.description }}</p>
             <label>Fecha de creación: {{ task.createdAt }}</label>
             
-            <div id="todo-item-actions">
-                <button style="background-color: skyblue" @click="toggleTask(task.id)">
-                    {{ task.completed ? "Undo" : "Complete" }}
-                </button>
-    
-                <button @click="modifyTask(task.id)">
-                    Modify
-                </button>
-    
+            <div id="todo-item-actions">    
                 <button style="background-color: #FF0000" @click="deleteTask(task.id)">
                     Delete
                 </button>
@@ -44,9 +41,9 @@ defineProps({
 const tasksStore = useTasksStore();
 
 // 📌 Acceder a las acciones de la store
-const toggleTask = tasksStore.toggleTask;
+const completeTask = tasksStore.completeTask;
 const deleteTask = tasksStore.deleteTask;
-const modifyTask = tasksStore.modifyTask;
+
 </script>
 
 <style scoped>
@@ -73,4 +70,10 @@ const modifyTask = tasksStore.modifyTask;
     padding: auto;
     background-color: white;
 }
+
+#todo-item-title {
+    display: flex;
+}
+
+
 </style>

@@ -28,6 +28,16 @@ export const useTasksStore = defineStore('taskStore', () => {
         }
     ]);
 
+    const completedTasks = ref([
+        {
+            id: 4,
+            title: 'Example completed Task',
+            description: 'This is an example completed task.',
+            completed: true,
+            priority: 'high'
+        }
+    ]);
+
     const deletedTasks = ref([
         {
             id: 5,
@@ -80,12 +90,23 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const completeTask = (taskId) => {
         const task = pendingTasks.value.find(task => task.id === taskId);
+        console.log('Tarea encontrada:', task);
         if (task.completed === true) {
             alert('La tarea ya fue completada');
             console.log('La tarea ya fue completada');
             return;
         }
-        task.completed = true;
+
+        // Insertamos la tarea en el array de tareas completadas
+        completedTasks.value.push(task);
+
+        // Eliminamos la tarea del array de tareas pendientes
+        pendingTasks.value = pendingTasks.value.filter(task => task.id !== taskId);
+        console.log('Tarea eliminada:', task);
+        console.log('Tarea completada:', task);
+        console.log('Tareas completadas:', completedTasks.value);
+        console.log('Tareas pendientes:', pendingTasks.value);
+
     }
 
     return {
