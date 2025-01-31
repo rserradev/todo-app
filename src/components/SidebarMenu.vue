@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <nav class="sidebar-menu-container">
     <div id="user-info">
@@ -9,11 +7,16 @@
     
     <div id="menu-items">
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/Completed">Completed</RouterLink>
       <RouterLink to="/Trash">Trash</RouterLink>
       <RouterLink to="/Settings">Settings</RouterLink>
     </div>
   </nav>
 </template>
+
+<script setup>
+</script>
+
 
 <style scoped>
 .sidebar-menu-container {
