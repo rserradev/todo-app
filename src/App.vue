@@ -1,9 +1,7 @@
 <template>
   <NavbarMenu/>
   <div class="layout">
-    <!-- TODO: MIGRAR Y ELIMINAR EL SIDEBAR MENU -->
     <nav class="sidebar">  
-    <SidebarMenu />
     <Sidebar/>
     </nav>
 
@@ -16,7 +14,6 @@
 </template>
 
 <script setup>
-import SidebarMenu from './components/SidebarMenu.vue'
 import NavbarMenu from './components/NavbarMenu.vue';
 import Sidebar from './components/layout/Sidebar.vue';
 
