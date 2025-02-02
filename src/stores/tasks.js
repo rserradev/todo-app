@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { computed } from 'vue';
 
 export const useTasksStore = defineStore('taskStore', () => {
     
@@ -50,6 +51,9 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const title = ref('');
     const description = ref('');
+
+    const sortBy = ref('createdAt');
+    const priority = ref('medium');
 
     const fechaHora = new Date();
     const fecha = fechaHora.toLocaleDateString();
@@ -106,16 +110,63 @@ export const useTasksStore = defineStore('taskStore', () => {
         console.log('Tarea completada:', task);
         console.log('Tareas completadas:', completedTasks.value);
         console.log('Tareas pendientes:', pendingTasks.value);
-
     }
+
+    const filterTasksByPriority = (priority) => {
+        console.log('Filtrando tareas por prioridad:', priority);
+    }
+
+    const setSortBy = (value) => {
+        sortBy.value = value;
+    };
+ 
+    const priorities = {
+        low: 1,
+        medium: 2,
+        high: 3
+    }
+
+    // Propiedades computadas
+    const sortedTasks = computed(() => {
+        return [...pendingTasks.value].sort((a, b) => {
+            switch (sortBy.value) {
+                case 'priority':
+                    const aPriority = priorities[a.priority];
+                    const bPriority = priorities[b.priority];
+                    console.log(bPriority - aPriority);
+                    return aPriority - bPriority;
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+    });
+
+    
+    // const sortedTasks = computed(() => {
+    //     return [...pendingTasks.value].sort((a, b) => {
+    //         switch (sortCriteria.value) {
+    //             case 'priority':
+    //                 const aPriority = priorities[a.priority];
+    //                 const bPriority = priorities[b.priority];
+    //                 console.log(bPriority, aPriority);
+    //                 return aPriority - bPriority;
+    //         }
+    //     });
+    // });
 
     return {
         title,
         description,
         pendingTasks,
         deletedTasks,
+        completedTasks,
+        sortBy,
+        sortedTasks,
         addTask,
         deleteTask,
-        completeTask
+        completeTask,
+        setSortBy
     }
 });

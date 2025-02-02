@@ -20,8 +20,9 @@
             <label>Fecha de creación: {{ task.createdAt }}</label>
             
             <div id="todo-item-actions">    
-                <button style="background-color: #FF0000" @click="deleteTask(task.id)">
-                    Delete
+                <button
+                    @click="deleteTask(task.id)">
+                        Delete
                 </button>
             </div>
         </div>
