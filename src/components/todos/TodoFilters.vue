@@ -10,6 +10,16 @@
             <option value="priority">Prioridad</option>
             <option value="createdAt">Fecha de creación</option>
             <option value="name">Nombre</option>
+            <option value="expiredAt">Fecha de vencimiento</option>
+        </select>
+
+        <label for="">Sort order:</label>
+        <select name="" id=""
+            v-model="sortDirection"
+            @change="setSortDirection(sortDirection)"
+        >
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
         </select>
     </div>
 </template>
@@ -19,7 +29,7 @@ import { useTasksStore } from '@/stores/tasks';
 
 const tasksStore = useTasksStore();
 
-const { sortBy, setSortBy, sortedTasks } = tasksStore;
+const { sortBy, setSortBy, setSortDirection } = tasksStore;
 
 console.log(sortBy);
 

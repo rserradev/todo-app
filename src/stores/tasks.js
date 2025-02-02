@@ -11,21 +11,24 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
-            priority: 'high'
+            priority: 'high',
+            createdAt: '2023-03-01 10:00:00'
         }, 
         {
             id: 2,
             title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
-            priority: 'medium'
+            priority: 'medium',
+            createdAt: '2023-03-02 10:00:00'
         },
         {
             id: 3,
             title: 'Example pending Task',
             description: 'This is an example pending task.',
             completed: false,
-            priority: 'low'
+            priority: 'low',
+            createdAt: '2023-03-03 10:00:00'
         }
     ]);
 
@@ -35,7 +38,8 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: 'Example completed Task',
             description: 'This is an example completed task.',
             completed: true,
-            priority: 'high'
+            priority: 'high',
+            createdAt: '2023-03-04 10:00:00'
         }
     ]);
 
@@ -45,7 +49,8 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: 'Example deleted Task',
             description: 'This is an example deleted task.',
             completed: false,
-            priority: 'medium'
+            priority: 'medium',
+            createdAt: '2023-03-05 10:00:00'
         }
     ]);
 
@@ -53,12 +58,9 @@ export const useTasksStore = defineStore('taskStore', () => {
     const description = ref('');
 
     const sortBy = ref('createdAt');
+    const sortDirection = ref('asc');
     const priority = ref('medium');
-
-    const fechaHora = new Date();
-    const fecha = fechaHora.toLocaleDateString();
-    const hora = fechaHora.toLocaleTimeString();
-
+    
     // Métodos
     const addTask = () => {
         if (title.value === '' || description.value === '') {
@@ -66,6 +68,11 @@ export const useTasksStore = defineStore('taskStore', () => {
             return;
         }
 
+        // La fecha debe quedar dentro de la funcion para que se actualice en cada ejecución
+        const fechaHora = new Date();
+        const fecha = fechaHora.toLocaleDateString();
+        const hora = fechaHora.toLocaleTimeString();
+        
         pendingTasks.value.push({
             id: Date.now(),
             title: title.value,
@@ -106,10 +113,6 @@ export const useTasksStore = defineStore('taskStore', () => {
 
         // Eliminamos la tarea del array de tareas pendientes
         pendingTasks.value = pendingTasks.value.filter(task => task.id !== taskId);
-        console.log('Tarea eliminada:', task);
-        console.log('Tarea completada:', task);
-        console.log('Tareas completadas:', completedTasks.value);
-        console.log('Tareas pendientes:', pendingTasks.value);
     }
 
     const filterTasksByPriority = (priority) => {
@@ -118,6 +121,11 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const setSortBy = (value) => {
         sortBy.value = value;
+    };
+
+    const setSortDirection = (value) => {
+        sortDirection.value = value;
+        console.log('Orden:', sortDirection.value);
     };
  
     const priorities = {
@@ -129,32 +137,31 @@ export const useTasksStore = defineStore('taskStore', () => {
     // Propiedades computadas
     const sortedTasks = computed(() => {
         return [...pendingTasks.value].sort((a, b) => {
+            let comparison = 0;
+
             switch (sortBy.value) {
-                case 'priority':
+                case 'priority':    
                     const aPriority = priorities[a.priority];
-                    const bPriority = priorities[b.priority];
-                    console.log(bPriority - aPriority);
-                    return aPriority - bPriority;
+                    const bPriority = priorities[b.priority]
+                    comparison = aPriority - bPriority;
+                    console.log(aPriority - bPriority);
                     break;
-            
+                case 'createdAt':
+                    const aDate = new Date(a.createdAt);
+                    const bDate = new Date(b.createdAt);
+                    comparison = aDate - bDate; // Ordena de mayor a menor
+                    break;
+                case 'name':
+                    const aTitle = a.title.toLowerCase();
+                    const bTitle = b.title.toLowerCase();
+                    comparison = aTitle.localeCompare(bTitle);
+                    break;
                 default:
                     break;
             }
+            return sortDirection.value === 'asc' ? comparison : -comparison;
         });
     });
-
-    
-    // const sortedTasks = computed(() => {
-    //     return [...pendingTasks.value].sort((a, b) => {
-    //         switch (sortCriteria.value) {
-    //             case 'priority':
-    //                 const aPriority = priorities[a.priority];
-    //                 const bPriority = priorities[b.priority];
-    //                 console.log(bPriority, aPriority);
-    //                 return aPriority - bPriority;
-    //         }
-    //     });
-    // });
 
     return {
         title,
@@ -164,9 +171,11 @@ export const useTasksStore = defineStore('taskStore', () => {
         completedTasks,
         sortBy,
         sortedTasks,
+        sortDirection,
         addTask,
         deleteTask,
         completeTask,
-        setSortBy
+        setSortBy,
+        setSortDirection
     }
 });
