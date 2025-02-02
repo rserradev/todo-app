@@ -43,23 +43,7 @@ const addTask = tasksStore.addTask;
 const deleteTask = tasksStore.deleteTask;
 const completeTask = tasksStore.completeTask;
 
-const priorities = {
-    low: 1,
-    medium: 2,
-    high: 3
-}
 
-const sortedTasks = computed(() => {
-    return [...pendingTasks.value].sort((a, b) => {
-        switch (sortCriteria.value) {
-            case 'priority':
-                const aPriority = priorities[a.priority];
-                const bPriority = priorities[b.priority];
-                console.log(bPriority, aPriority);
-                return aPriority - bPriority;
-        }
-    });
-});
 
 console.log(sortedTasks.value);
 </script>
