@@ -18,9 +18,11 @@
             
             <p>{{ task.description }}</p>
             <label>Fecha de creación: {{ task.createdAt }}</label>
+            <label for="">Fecha de vencimiento: pendiente por hacer</label>
             
-            <div id="todo-item-actions">    
+            <div class="flex justify-between border-t p-2 gap-2 ">
                 <button
+                    class="bg-red-500 text-white px-3 py-1 rounded-lg"
                     @click="deleteTask(task.id)">
                         Delete
                 </button>

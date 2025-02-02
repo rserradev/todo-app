@@ -4,18 +4,25 @@
         <h1 class="text-2xl font-bold text-start py-5">Lista de tareas</h1>
         <div class="flex flex-col gap-1 border border-gray rounded-lg">
             <input
+                type="text"
                 class="m-1"
                 v-model="title"
                 placeholder="Nombre de la tarea"
             />
             <textarea
+                typeof="textarea"
                 class="m-1"
                 v-model="description"
                 placeholder="Descripción">
             </textarea>
-            <div class="flex justify-end border-t p-2">
-                <button
+            <div class="flex justify-between border-t p-2">
+                <input
+                    type="datetime-local"
                     class="bg-blue-500 text-white p-2 rounded-lg"
+                >
+                <button
+                    type="button"
+                    class="bg-blue-500 text-white p-2 rounded-lg "
                     @click="addTask">
                     Añadir tarea
                 </button>   
