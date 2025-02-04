@@ -56,10 +56,10 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const title = ref('');
     const description = ref('');
+    const priority = ref('medium');
 
     const sortBy = ref('createdAt');
     const sortDirection = ref('asc');
-    const priority = ref('medium');
     
     // Métodos
     const addTask = () => {
@@ -78,11 +78,12 @@ export const useTasksStore = defineStore('taskStore', () => {
             title: title.value,
             description: description.value,
             completed: false,
-            priority: 'medium',
+            priority: priority.value,
             createdAt: fecha + ' ' + hora,
         })
         title.value = '';
         description.value = '';
+        priority.value = 'medium';
         console.log('Tareas pendientes:', pendingTasks.value);
     };
 
@@ -121,12 +122,18 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const setSortBy = (value) => {
         sortBy.value = value;
+        console.log('Orden:', sortBy.value);
     };
 
     const setSortDirection = (value) => {
         sortDirection.value = value;
         console.log('Orden:', sortDirection.value);
     };
+
+    const setPriority = (value) => {
+        priority.value = value;
+        console.log('Prioridad:', priority.value);
+    }
  
     const priorities = {
         low: 1,
@@ -166,6 +173,7 @@ export const useTasksStore = defineStore('taskStore', () => {
     return {
         title,
         description,
+        priority,
         pendingTasks,
         deletedTasks,
         completedTasks,
@@ -176,6 +184,7 @@ export const useTasksStore = defineStore('taskStore', () => {
         deleteTask,
         completeTask,
         setSortBy,
-        setSortDirection
+        setSortDirection,
+        setPriority
     }
 });

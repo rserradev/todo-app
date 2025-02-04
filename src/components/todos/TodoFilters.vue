@@ -6,7 +6,8 @@
             v-model="sortBy"
             @change="setSortBy(sortBy)"
             class="border rounded-lg border-gray-300 p-1"
-            name="" id="" >
+            name="" id=""
+            >
             <option value="priority">Prioridad</option>
             <option value="createdAt">Fecha de creación</option>
             <option value="name">Nombre</option>
@@ -14,11 +15,11 @@
         </select>
 
         <label for="">Sort order:</label>
-        <select name="" id=""
+        <select 
             v-model="sortDirection"
             @change="setSortDirection(sortDirection)"
         >
-            <option value="asc">Ascendente</option>
+            <option value="asc" selected>Ascendente</option>
             <option value="desc">Descendente</option>
         </select>
     </div>
@@ -29,7 +30,7 @@ import { useTasksStore } from '@/stores/tasks';
 
 const tasksStore = useTasksStore();
 
-const { sortBy, setSortBy, setSortDirection } = tasksStore;
+const { sortBy, sortDirection, setSortBy, setSortDirection } = tasksStore;
 
 console.log(sortBy);
 
