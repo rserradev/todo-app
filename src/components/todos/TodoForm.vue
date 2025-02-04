@@ -20,6 +20,15 @@
                     type="datetime-local"
                     class="bg-blue-500 text-white p-2 rounded-lg"
                 >
+                <select
+                    class="bg-blue-500 text-white p-2 rounded-lg"
+                    v-model="priority"
+                    @change="setPriority(priority)"
+                >
+                    <option value="low">Baja</option>
+                    <option value="medium" selected>Media</option>
+                    <option value="high">Alta</option>
+                </select>
                 <button
                     type="button"
                     class="bg-blue-500 text-white p-2 rounded-lg "
@@ -39,10 +48,11 @@ import { storeToRefs } from 'pinia';
 const tasksStore = useTasksStore();
 
 // Acceso al estado (propiedades - variables)
-const { title, description } = storeToRefs(tasksStore);
+const { title, description, priority } = storeToRefs(tasksStore);
 
 // Acceso a las acciones (metodos - funciones)
 const addTask = tasksStore.addTask;
+const setPriority = tasksStore.setPriority;
 
 
 </script>
