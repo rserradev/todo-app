@@ -22,6 +22,13 @@
             
             <div class="flex justify-between border-t p-2 gap-2 ">
                 <button
+                    class="bg-green-500 text-white px-3 py-1 rounded-lg"
+                    @click="openEditModal(task.id)"
+                >
+                    Editar
+                </button>
+
+                <button
                     class="bg-red-500 text-white px-3 py-1 rounded-lg"
                     @click="deleteTask(task.id)">
                         Delete
@@ -34,6 +41,7 @@
 
 <script setup>
 import { useTasksStore } from '@/stores/tasks';
+import { storeToRefs } from 'pinia';
 
 // 📌 Recibir `task` como `prop`
 defineProps({
@@ -43,40 +51,17 @@ defineProps({
 // 📌 Instancia de la store
 const tasksStore = useTasksStore();
 
+// 📌 Acceder a las propiedades de la store
+const { isEditing } = storeToRefs(tasksStore);
+
 // 📌 Acceder a las acciones de la store
 const completeTask = tasksStore.completeTask;
 const deleteTask = tasksStore.deleteTask;
+const openEditModal = tasksStore.openEditModal;
 
 </script>
 
 <style scoped>
-.completed {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-.todo-item-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-#todo-item {
-    display: grid;
-    margin: 5px;
-
-    border-radius: 10px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #E6E6E6;
-
-    padding: auto;
-    background-color: white;
-}
-
-#todo-item-title {
-    display: flex;
-}
 
 
 </style>

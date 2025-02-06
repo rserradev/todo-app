@@ -9,6 +9,7 @@
             :task="task"
         />
     </div>
+    <TodoEditModal/>
 </template>
 
 <script setup>
@@ -16,6 +17,7 @@ import { useTasksStore } from '@/stores/tasks'; // Importamos la store de tareas
 import { storeToRefs } from 'pinia'; // Importamos la función storeToRefs de Pinia
 import TodoItem from './TodoItem.vue';
 import TodoFilters from './TodoFilters.vue';
+import TodoEditModal from './TodoEditModal.vue';
 
 // Instancia de la store
 const tasksStore = useTasksStore();
