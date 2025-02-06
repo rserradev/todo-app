@@ -21,12 +21,14 @@
                     class="bg-blue-500 text-white p-2 rounded-lg"
                 >
                 <select
-                    class="bg-blue-500 text-white p-2 rounded-lg"
                     v-model="priority"
                     @change="setPriority(priority)"
+                    placeholder="Prioridad"
+                    class="bg-blue-500 text-white p-2 rounded-lg"
                 >
+                    <option value="" selected disabled>Prioridad</option>
                     <option value="low">Baja</option>
-                    <option value="medium" selected>Media</option>
+                    <option value="medium">Media</option>
                     <option value="high">Alta</option>
                 </select>
                 <button

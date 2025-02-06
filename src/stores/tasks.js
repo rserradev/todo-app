@@ -56,7 +56,9 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const title = ref('');
     const description = ref('');
-    const priority = ref('medium');
+    const priority = ref('');
+
+    const isEditing = ref(false);
 
     const sortBy = ref('createdAt');
     const sortDirection = ref('asc');
@@ -72,6 +74,10 @@ export const useTasksStore = defineStore('taskStore', () => {
         const fechaHora = new Date();
         const fecha = fechaHora.toLocaleDateString();
         const hora = fechaHora.toLocaleTimeString();
+
+        if (priority.value === '') {
+            priority.value = 'medium';
+        }
         
         pendingTasks.value.push({
             id: Date.now(),
@@ -83,9 +89,15 @@ export const useTasksStore = defineStore('taskStore', () => {
         })
         title.value = '';
         description.value = '';
-        priority.value = 'medium';
+        priority.value = '';
         console.log('Tareas pendientes:', pendingTasks.value);
     };
+
+    const openEditModal = (taskId) => {
+        console.log('Abriendo modal de edición de tarea con ID:', taskId);
+        isEditing.value = true;
+        console.log('Editando tarea con ID:', taskId);
+    }
 
     const deleteTask = (taskId) => {
         console.log('Eliminando tarea con ID:', taskId);
@@ -180,7 +192,9 @@ export const useTasksStore = defineStore('taskStore', () => {
         sortBy,
         sortedTasks,
         sortDirection,
+        isEditing,
         addTask,
+        openEditModal,
         deleteTask,
         completeTask,
         setSortBy,
