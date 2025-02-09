@@ -3,7 +3,27 @@ import { ref } from 'vue';
 import { computed } from 'vue';
 
 export const useTasksStore = defineStore('taskStore', () => {
-    
+
+    // Factory function to create a new todo item
+    const createTodo = (title, description, priority) => {
+        const dateTime = new Date();
+        const date = dateTime.toLocaleDateString();
+        const time = dateTime.toLocaleTimeString();
+
+        if (priority === '') {
+            priority = 'medium';
+        }
+
+        return {
+            id: Date.now(),
+            title: title,
+            description: description,
+            completed: false,
+            priority: priority,
+            createdAt: date + ' ' + time
+        }
+    };
+
     // Estado reactivo
     const pendingTasks = ref([
         {
@@ -54,6 +74,7 @@ export const useTasksStore = defineStore('taskStore', () => {
         }
     ]);
 
+    // Variables
     const title = ref('');
     const description = ref('');
     const priority = ref('');
@@ -62,6 +83,8 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const sortBy = ref('createdAt');
     const sortDirection = ref('asc');
+
+    const todoToEdit = ref([]);
     
     // Métodos
     const addTask = () => {
@@ -70,23 +93,12 @@ export const useTasksStore = defineStore('taskStore', () => {
             return;
         }
 
-        // La fecha debe quedar dentro de la funcion para que se actualice en cada ejecución
-        const fechaHora = new Date();
-        const fecha = fechaHora.toLocaleDateString();
-        const hora = fechaHora.toLocaleTimeString();
+        const newTodo = createTodo(title.value, description.value, priority.value);
 
-        if (priority.value === '') {
-            priority.value = 'medium';
-        }
-        
-        pendingTasks.value.push({
-            id: Date.now(),
-            title: title.value,
-            description: description.value,
-            completed: false,
-            priority: priority.value,
-            createdAt: fecha + ' ' + hora,
-        })
+        pendingTasks.value.push(newTodo);
+
+        console.log('Tarea añadida:', newTodo);
+
         title.value = '';
         description.value = '';
         priority.value = '';
@@ -95,8 +107,25 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const openEditModal = (taskId) => {
         console.log('Abriendo modal de edición de tarea con ID:', taskId);
-        isEditing.value = true;
+        // Buscamos el todo en el array de todos
+        const todo = pendingTasks.value.find(todo => todo.id === taskId);
+        console.log('Todo a editar:', todo);
+
+        // Si el todo existe, lo establecemos en el estado y abrimos el modal
+        if (todo) {
+            todoToEdit.value = { ...todo }; // Copiamos el todo a un nuevo objeto
+            isEditing.value = true;
+        } else {
+            // Si no existe, mostramos un mensaje de error
+            alert('No se encontró el todo');
+            return;
+        }
+
         console.log('Editando tarea con ID:', taskId);
+    }
+
+    const saveEditedTodo = (id) => {
+        console.log('Guardando tarea con ID:', id);
     }
 
     const deleteTask = (taskId) => {
@@ -193,12 +222,14 @@ export const useTasksStore = defineStore('taskStore', () => {
         sortedTasks,
         sortDirection,
         isEditing,
+        todoToEdit,
         addTask,
         openEditModal,
         deleteTask,
         completeTask,
         setSortBy,
         setSortDirection,
-        setPriority
+        setPriority,
+        saveEditedTodo
     }
 });
