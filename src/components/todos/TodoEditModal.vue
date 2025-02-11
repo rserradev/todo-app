@@ -6,24 +6,35 @@
             <div class="bg-white rounded-lg m-5 p-5">
                 <h1 class="text-2xl font-bold mb-4">Editar tarea</h1>
 
+                
+                
                 <!-- input para editar el título -->
                 <input v-model="todoToEdit.title" class="w-full p-2 mb-4 border-2 border-gray-400 rounded-lg"
-                    type="text">
-
+                type="text">
+                
                 <!-- input para editar la descripción -->
                 <textarea v-model="todoToEdit.description" class="w-full p-2 mb-4 border-2 border-gray-400 rounded-lg"
-                    type="">
-                    </textarea>
+                type="">sasdasdasd</textarea>
+                
+                <!-- Combobox de Prioridad -->
+                <select name="" id="" class="">
+                    <option value="">Prioridad</option>
+                    <option value="low">Baja</option>
+                    <option value="medium">Media</option>
+                    <option value="high">Alta</option>
+                </select>
 
-                <!-- Boton para guardar la edición -->
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl"
-                    type="button">Guardar</button>
+                <div class="flex justify-between gap-5">
+                    <!-- Boton para guardar la edición -->
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl"
+                        type="button">Guardar</button>
 
-                <!-- Boton para cerrar el modal -->
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl" type="button"
-                    @click="isEditing = false">
-                    Cancelar
-                </button>
+                    <!-- Boton para cerrar el modal -->
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl" type="button"
+                        @click="isEditing = false">
+                        Cancelar
+                    </button>
+                </div>
             </div>
         </div>
     </Transition>
