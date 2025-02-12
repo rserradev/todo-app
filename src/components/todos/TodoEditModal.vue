@@ -17,7 +17,7 @@
                 type="">sasdasdasd</textarea>
                 
                 <!-- Combobox de Prioridad -->
-                <select name="" id="" class="">
+                <select name="" id="" class="border-2 border-gray-400 rounded-lg p-2">
                     <option value="">Prioridad</option>
                     <option value="low">Baja</option>
                     <option value="medium">Media</option>
@@ -27,7 +27,9 @@
                 <div class="flex justify-between gap-5">
                     <!-- Boton para guardar la edición -->
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl"
-                        type="button">Guardar</button>
+                        type="button"
+                        v-on:click="saveEditedTodo(todoToEdit.id)"
+                        >Guardar</button>
 
                     <!-- Boton para cerrar el modal -->
                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl" type="button"
@@ -49,6 +51,7 @@ const tasksStore = useTasksStore();
 
 // Acceso al estado (propiedades - variables)
 const { isEditing, todoToEdit } = storeToRefs(tasksStore);
+const saveEditedTodo = tasksStore.saveEditedTodo;
 
 </script>
 
