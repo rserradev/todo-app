@@ -125,6 +125,21 @@ export const useTasksStore = defineStore('taskStore', () => {
     }
 
     const saveEditedTodo = (id) => {
+        // Buscamos el todo en el array de todos originales
+        const originalTodo = pendingTasks.value.find(todo => todo.id === id);
+
+        // Si el todo existe, lo actualizamos con los nuevos datos
+        if (originalTodo) {
+            originalTodo.title = todoToEdit.value.title;
+            originalTodo.description = todoToEdit.value.description;
+            originalTodo.priority = todoToEdit.value.priority;
+            console.log('Todo actualizado:', originalTodo);
+        } else {
+            // Si no existe, mostramos un mensaje de error
+            alert('No se encontró el todo');
+            return;
+        }
+        console.log('Todo original:', originalTodo);
         console.log('Guardando tarea con ID:', id);
     }
 
