@@ -17,8 +17,8 @@
                 type="">sasdasdasd</textarea>
                 
                 <!-- Combobox de Prioridad -->
-                <select name="" id="" class="border-2 border-gray-400 rounded-lg p-2">
-                    <option value="">Prioridad</option>
+                <select v-model="todoToEdit.priority" name="" id="" class="border-2 border-gray-400 rounded-lg p-2">
+                    <option value="" selected disabled>Prioridad</option>
                     <option value="low">Baja</option>
                     <option value="medium">Media</option>
                     <option value="high">Alta</option>

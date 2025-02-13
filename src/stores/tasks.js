@@ -86,7 +86,10 @@ export const useTasksStore = defineStore('taskStore', () => {
 
     const todoToEdit = ref([]);
     
-    // Métodos
+    /**
+     * Metodo para agregar una tarea
+     * @returns 
+     */
     const addTask = () => {
         if (title.value === '' || description.value === '') {
             alert('Tiene campos vacios');
@@ -97,43 +100,56 @@ export const useTasksStore = defineStore('taskStore', () => {
 
         pendingTasks.value.push(newTodo);
 
-        console.log('Tarea añadida:', newTodo);
-
         title.value = '';
         description.value = '';
         priority.value = '';
-        console.log('Tareas pendientes:', pendingTasks.value);
     };
 
+    /**
+     * Método para abrir el modal de edición de una tarea
+     * @param {number} taskId - ID de la tarea a editar
+     */
     const openEditModal = (taskId) => {
-        console.log('Abriendo modal de edición de tarea con ID:', taskId);
         // Buscamos el todo en el array de todos
         const todo = pendingTasks.value.find(todo => todo.id === taskId);
-        console.log('Todo a editar:', todo);
 
         // Si el todo existe, lo establecemos en el estado y abrimos el modal
         if (todo) {
             todoToEdit.value = { ...todo }; // Copiamos el todo a un nuevo objeto
-            isEditing.value = true;
+            isEditing.value = true; // Establecemos el estado de edición
         } else {
             // Si no existe, mostramos un mensaje de error
             alert('No se encontró el todo');
             return;
         }
-
-        console.log('Editando tarea con ID:', taskId);
     }
 
+    /**
+     * Método para guardar los cambios realizados en una tarea
+     * @param {number} id - ID de la tarea a actualizar
+     */
     const saveEditedTodo = (id) => {
         // Buscamos el todo en el array de todos originales
         const originalTodo = pendingTasks.value.find(todo => todo.id === id);
 
+        // Comparamos si hay cambios en el todo
+        const originalTodoJson = JSON.stringify(originalTodo)
+        const todoToEditJson = JSON.stringify(todoToEdit.value)
+        
+        const hasChange = originalTodoJson !== todoToEditJson;
+
+        if (!hasChange) {
+            alert('No hay cambios a guardar');
+            return;
+        }
+
         // Si el todo existe, lo actualizamos con los nuevos datos
-        if (originalTodo) {
+        if (originalTodo ) {
             originalTodo.title = todoToEdit.value.title;
             originalTodo.description = todoToEdit.value.description;
             originalTodo.priority = todoToEdit.value.priority;
-            console.log('Todo actualizado:', originalTodo);
+            alert('Tarea actualizada');
+            isEditing.value = false;
         } else {
             // Si no existe, mostramos un mensaje de error
             alert('No se encontró el todo');
@@ -143,16 +159,12 @@ export const useTasksStore = defineStore('taskStore', () => {
         console.log('Guardando tarea con ID:', id);
     }
 
+    // Método para eliminar una tarea
     const deleteTask = (taskId) => {
-        console.log('Eliminando tarea con ID:', taskId);
         if (window.confirm('Esta seguro que quiere eliminar la tarea?') === true) {
             const task = pendingTasks.value.find(task => task.id === taskId); // Busca la tarea por el id
-            console.log('Tarea encontrada:', task);
             deletedTasks.value.push(task); // Añade la tarea eliminada al array de tareas eliminadas
             pendingTasks.value = pendingTasks.value.filter(task => task.id !== taskId); // Filtra el array y devuelve el resto de los elementos que no coinciden con el id
-            console.log('Tarea eliminada:', task);
-            console.log('Tareas eliminadas:', deletedTasks.value);
-            console.log('Tareas pendientes:', pendingTasks.value);   
         }
     }
 
