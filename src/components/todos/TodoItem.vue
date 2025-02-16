@@ -1,37 +1,36 @@
 <template>
-    <div id="todo-item-container">
-        <div id="todo-item">
-            <p>ID: {{ task.id }} | Prioridad: {{ task.priority }}</p>
+    <div id="todo-item-container" class="flex flex-col m-5">
+        <div id="todo-item" class="flex flex-col border border-gray-500 rounded-lg ">
             
-            <div id="todo-item-title">
-                <input
-                    :checked="task.completed"
-                    @change="completeTask(task.id)"
-                    type="checkbox"
-                />
-
-                <h2 
-                    :class="{ completed: task.completed, pending: !task.completed }">
-                    {{ task.title }}
-                </h2>
+            <div class="flex justify-between border-b p-2 gap-2">
+                <p>ID: {{ task.id }} | Prioridad: {{ task.priority }}</p>
+                <label>Fecha de creación: {{ task.createdAt }}</label>
+                <label for="">Fecha de vencimiento: pendiente por hacer</label>
             </div>
-            
-            <p>{{ task.description }}</p>
-            <label>Fecha de creación: {{ task.createdAt }}</label>
-            <label for="">Fecha de vencimiento: pendiente por hacer</label>
-            
+
+            <div class="flex">
+                <div id="todo-item-title" class="flex m-2">
+                    <input :checked="task.completed" @change="completeTask(task.id)" type="radio"
+                        class="mr-2 h-5 w-5" />
+
+                    </div>
+                    <div>
+                        
+                    <h1 :class="{ completed: task.completed, pending: !task.completed }">
+                        {{ task.title }}
+                    </h1>
+                    <p class="text-sm">{{ task.description }}</p>
+                </div>
+            </div>
+
+
             <div class="flex justify-between border-t p-2 gap-2 ">
-                <button
-                    class="bg-green-500 text-white px-3 py-1 rounded-lg"
-                    @click="openEditModal(task.id)"
-                >
+                <button class="bg-green-500 text-white px-3 py-1 rounded-lg" @click="openEditModal(task.id)">
                     Editar
                 </button>
 
-                <button
-                    class="bg-red-500 text-white px-3 py-1 rounded-lg"
-                    @click="deleteTask(task.id)">
-                        Delete
+                <button class="bg-red-500 text-white px-3 py-1 rounded-lg" @click="deleteTask(task.id)">
+                    Delete
                 </button>
             </div>
         </div>
@@ -61,7 +60,4 @@ const openEditModal = tasksStore.openEditModal;
 
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>
