@@ -20,6 +20,7 @@
                     type="datetime-local"
                     class="bg-blue-500 text-white p-2 rounded-lg"
                 >
+                <!-- Selector de prioridad para la tarea -->
                 <select
                     v-model="priority"
                     @change="setPriority(priority)"
@@ -31,6 +32,21 @@
                     <option value="medium">Media</option>
                     <option value="high">Alta</option>
                 </select>
+                <!-- Selector de tags para la tarea -->
+                <select
+                    v-model="tag"
+                    @change="setTag(tag)"
+                    placeholder="Tag"
+                    class="bg-blue-500 text-white p-2 rounded-lg"
+                >
+                    <option value="" selected disabled>Tag</option>
+                    <option value="work">Trabajo</option>
+                    <option value="personal">Personal</option>
+                    <option value="shopping">Compras</option>
+                    <option value="health">Salud</option>
+                    <option value="study">Estudio</option>
+                </select>
+                <!-- Botón para añadir la tarea -->
                 <button
                     type="button"
                     class="bg-blue-500 text-white p-2 rounded-lg "
